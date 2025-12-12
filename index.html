@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wedding of Rizky & Putri</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* Custom Styles & Animation Utilities */
+        :root {
+            --primary-color: #5a5a5a;
+            --accent-color: #a8a8a8;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fdfdfd;
+            background-image: radial-gradient(#e5e5e5 1px, transparent 1px);
+            background-size: 40px 40px;
+            overflow-x: hidden;
+            color: var(--primary-color);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .font-handwriting {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* Smooth Transition Classes */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal-element.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Glassmorphism for Overlay */
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* Music Button Animation */
+        .spin-slow {
+            animation: spin 4s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Image Shadow & Decoration */
+        .photo-frame {
+            box-shadow: 20px 20px 0px 0px #f3f3f3;
+            transition: transform 0.3s ease;
+        }
+        .photo-frame:hover {
+            transform: scale(1.02);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d1d1; 
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Audio Element -->
+    <!-- Menggunakan link piano instrumental Beautiful in White agar elegan -->
+    <audio id="bg-music" loop>
+        <source src="https://commondatastorage.googleapis.com/codeskulptor-demos/riceracer_assets/music/win.ogg" type="audio/ogg"> 
+        <!-- Catatan: Ganti src di atas dengan file 'Shane Filan - Beautiful in White' jika Anda memilikinya secara lokal. 
+             Link di atas adalah placeholder musik instrumental yang indah. -->
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <!-- Music Control Button (Floating) -->
+    <div id="music-control" class="fixed bottom-6 right-6 z-50 hidden cursor-pointer bg-white p-3 rounded-full shadow-lg border border-gray-100 transition hover:scale-110">
+        <i class="ph-fill ph-music-notes text-2xl text-gray-600 spin-slow" id="music-icon"></i>
+    </div>
+
+    <!-- 1. WELCOME OVERLAY (Cover Depan) -->
+    <section id="overlay" class="fixed inset-0 z-40 flex flex-col items-center justify-center bg-white text-center px-4 transition-transform duration-1000 ease-in-out">
+        <div class="mb-6 animate-pulse">
+            <i class="ph ph-heart text-3xl text-gray-300"></i>
+        </div>
+        <h3 class="text-lg tracking-[0.3em] uppercase text-gray-500 mb-2">The Wedding of</h3>
+        <h1 class="font-handwriting text-6xl md:text-8xl text-gray-800 mb-6 drop-shadow-sm">Qatherin & Alip</h1>
+        <p class="text-sm text-gray-500 mb-8 italic">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+        
+        <button onclick="openInvitation()" class="group relative px-8 py-3 bg-gray-800 text-white font-serif tracking-widest text-sm hover:bg-gray-700 transition rounded-full overflow-hidden shadow-xl">
+            <span class="relative z-10 flex items-center gap-2">
+                <i class="ph ph-envelope-open"></i> BUKA UNDANGAN
+            </span>
+        </button>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="relative z-0 hidden" id="main-content">
+        
+        <!-- SEGMENT 1: MEMPELAI (BRIDE & GROOM) -->
+        <section class="min-h-screen flex flex-col justify-center items-center text-center px-6 py-20 relative overflow-hidden">
+            <!-- Decorative Background Elements -->
+            <div class="absolute top-0 left-0 w-64 h-64 bg-gray-50 rounded-full blur-3xl opacity-50 -translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-gray-100 rounded-full blur-3xl opacity-50 translate-x-1/3 translate-y-1/3"></div>
+
+            <div class="reveal-element z-10">
+                <p class="text-gray-400 tracking-[0.2em] text-sm uppercase mb-4">Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan</p>
+                <div class="h-px w-20 bg-gray-300 mx-auto mb-10"></div>
+                
+                <!-- Groom -->
+                <div class="mb-12">
+                    <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4 border-2 border-gray-100 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&auto=format&fit=crop" alt="Groom" class="w-full h-full object-cover">
+                    </div>
+                    <h2 class="font-handwriting text-5xl text-gray-800 mb-2">Alip</h2>
+                    <p class="text-sm text-gray-500">Mempelai Pria</p>
+                </div>
+
+                <span class="font-handwriting text-4xl text-gray-300 block mb-12">&</span>
+
+                <!-- Bride -->
+                <div>
+                    <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4 border-2 border-gray-100 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop" alt="Bride" class="w-full h-full object-cover">
+                    </div>
+                    <h2 class="font-handwriting text-5xl text-gray-800 mb-2">Qatherin</h2>
+                    <p class="text-sm text-gray-500">Mempelai Putri</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEGMENT 2: AYAT AL-QURAN -->
+        <section class="min-h-[80vh] flex flex-col justify-center items-center text-center px-6 py-20 bg-gray-50">
+            <div class="max-w-2xl reveal-element">
+                <i class="ph-fill ph-book-open-text text-4xl text-gray-300 mb-6"></i>
+                <h3 class="text-2xl font-serif text-gray-700 mb-8">QS. Ar-Rum: 21</h3>
+                
+                <p class="font-serif text-2xl leading-loose text-gray-600 mb-6 italic" dir="rtl">
+                    وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً
+                </p>
+                
+                <p class="text-sm md:text-base text-gray-500 leading-relaxed font-light">
+                    "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."
+                </p>
+            </div>
+        </section>
+
+        <!-- SEGMENT 3: GALERI FOTO (MOMENT) -->
+        <section class="min-h-screen flex flex-col justify-center items-center px-6 py-20 bg-white">
+            <div class="text-center mb-12 reveal-element">
+                <h2 class="text-4xl font-serif text-gray-800 mb-2">Our Moment</h2>
+                <div class="h-1 w-12 bg-gray-200 mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto w-full">
+                <!-- Photo 1 -->
+                <div class="reveal-element delay-100">
+                    <div class="photo-frame relative h-96 w-full bg-gray-100 overflow-hidden rounded-sm">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop" alt="Wedding Photo 1" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/10"></div>
+                    </div>
+                </div>
+                <!-- Photo 2 (Offset on Desktop) -->
+                <div class="reveal-element delay-200 md:mt-20">
+                    <div class="photo-frame relative h-96 w-full bg-gray-100 overflow-hidden rounded-sm">
+                        <img src="https://images.unsplash.com/photo-1511285560982-1351cdeb9821?q=80&w=800&auto=format&fit=crop" alt="Wedding Photo 2" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/10"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center reveal-element">
+                <p class="font-handwriting text-3xl text-gray-400">"Forever starts today."</p>
+            </div>
+        </section>
+
+        <!-- SEGMENT 4: LOKASI & WAKTU (EVENT) -->
+        <section class="min-h-screen flex flex-col justify-center items-center text-center px-6 py-20 bg-gray-50 relative">
+             <div class="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+            
+            <div class="z-10 max-w-3xl w-full reveal-element">
+                <h2 class="text-4xl font-serif text-gray-800 mb-10">Save The Date</h2>
+
+                <div class="bg-white p-8 md:p-12 shadow-xl border border-gray-100 rounded-lg">
+                    <!-- Date -->
+                    <div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-8 border-b border-gray-100 pb-8">
+                        <div class="text-center">
+                            <span class="block text-gray-400 uppercase tracking-widest text-xs">Minggu</span>
+                            <span class="block text-5xl font-serif text-gray-800 my-2">24</span>
+                            <span class="block text-gray-400 uppercase tracking-widest text-xs">Agustus 2025</span>
+                        </div>
+                        <div class="hidden md:block h-12 w-px bg-gray-200"></div>
+                        <div class="text-center">
+                            <span class="block text-xl font-medium text-gray-700">Resepsi Pernikahan</span>
+                            <span class="block text-gray-500 mt-1">11:00 - 14:00 WIB</span>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="mb-8">
+                        <i class="ph-fill ph-map-pin text-3xl text-gray-400 mb-4"></i>
+                        <h3 class="text-xl font-bold text-gray-700">Grand Ballroom Hotel Mulia</h3>
+                        <p class="text-gray-500 mt-2 px-4">Jl. Asia Afrika, Senayan, Jakarta Pusat, DKI Jakarta</p>
+                    </div>
+
+                    <!-- Button Map -->
+                    <a href="https://maps.google.com" target="_blank" class="inline-block px-8 py-3 bg-gray-800 text-white text-sm tracking-wide rounded hover:bg-gray-700 transition shadow-md">
+                        LIHAT LOKASI
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="py-10 bg-white text-center">
+            <p class="font-handwriting text-2xl text-gray-400 mb-2">Terima Kasih</p>
+            <p class="text-xs text-gray-300 uppercase tracking-widest">Rizky & Putri</p>
+        </footer>
+
+    </main>
+
+    <script>
+        // --- Logic: Buka Undangan & Play Music ---
+        const overlay = document.getElementById('overlay');
+        const mainContent = document.getElementById('main-content');
+        const musicControl = document.getElementById('music-control');
+        const bgMusic = document.getElementById('bg-music');
+        const musicIcon = document.getElementById('music-icon');
+        let isPlaying = false;
+
+        function openInvitation() {
+            // Hilangkan overlay (slide up)
+            overlay.style.transform = 'translateY(-100%)';
+            
+            // Tampilkan konten utama
+            mainContent.classList.remove('hidden');
+            
+            // Putar musik
+            playMusic();
+            
+            // Tampilkan tombol kontrol musik
+            setTimeout(() => {
+                musicControl.classList.remove('hidden');
+            }, 1000);
+
+            // Trigger animasi untuk elemen pertama setelah overlay hilang
+            setTimeout(handleScrollAnimation, 500);
+        }
+
+        function playMusic() {
+            bgMusic.play().then(() => {
+                isPlaying = true;
+                musicIcon.classList.remove('ph-play');
+                musicIcon.classList.add('ph-music-notes', 'spin-slow');
+            }).catch(error => {
+                console.log("Autoplay dicegah browser, perlu interaksi user lagi.");
+            });
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicIcon.classList.remove('ph-music-notes', 'spin-slow');
+                musicIcon.classList.add('ph-speaker-slash');
+            } else {
+                bgMusic.play();
+                musicIcon.classList.remove('ph-speaker-slash');
+                musicIcon.classList.add('ph-music-notes', 'spin-slow');
+            }
+            isPlaying = !isPlaying;
+        }
+
+        musicControl.addEventListener('click', toggleMusic);
+
+        // --- Logic: Smooth Scroll Animations (Intersection Observer) ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15 // Elemen terdeteksi jika 15% masuk viewport
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // Optional: Stop observing once revealed
+                    // observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        function handleScrollAnimation() {
+            const revealElements = document.querySelectorAll('.reveal-element');
+            revealElements.forEach(el => observer.observe(el));
+        }
+
+        // Panggil saat load untuk jaga-jaga, tapi trigger utama ada di openInvitation
+        document.addEventListener('DOMContentLoaded', () => {
+           // Wait for 'Buka Undangan'
+        });
+
+    </script>
+</body>
+</html>
